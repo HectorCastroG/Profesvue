@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('body');
+            $table->text('summary');
+            $table->string('pkey1')->nullable();
+            $table->string('pkey2')->nullable();
+            $table->string('pkey3')->nullable();
             $table->foreignId('profesor_id');
             $table->foreignId('signature_id');
             $table->timestamps();

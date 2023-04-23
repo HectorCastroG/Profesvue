@@ -18,7 +18,9 @@ class ClaseController extends Controller
 
     public function index(){
 
-        return Inertia::render('Clase/Index');
+        return Inertia::render('Clase/Index', [
+            'clases' => Clase::all()
+        ]);
     }
 
     public function nuevo(Request $request){

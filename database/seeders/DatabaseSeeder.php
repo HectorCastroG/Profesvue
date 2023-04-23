@@ -110,6 +110,7 @@ class DatabaseSeeder extends Seeder
         Clase::create([
             'profesor_id'=>2,
             'signature_id'=>2,
+            'summary'=>'nose',
             'title'=>'hola gente',
             'body'=>'muchas cosas'
         ]);
@@ -117,6 +118,7 @@ class DatabaseSeeder extends Seeder
         Clase::create([
             'profesor_id'=>2,
             'signature_id'=>2,
+            'summary'=>'nose',
             'title'=>'otra cosa',
             'body'=>'blablablablablalba x blabla'
         ]);
@@ -124,11 +126,12 @@ class DatabaseSeeder extends Seeder
         Clase::create([
             'profesor_id'=>2,
             'signature_id'=>2,
+            'summary'=>'nose',
             'title'=>'capuchino',
             'body'=>'te gusta el capuchino, ¿vainilla quizas?'
         ]);
 
-        Clase::factory(40)->create();
+        Clase::factory(100)->create();
 
     }
 }

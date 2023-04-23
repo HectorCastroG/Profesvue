@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
+//use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Termwind\Components\Dd;
 use App\Models\Profesor;
@@ -15,28 +16,32 @@ class ProfesorController extends Controller
 {
     public function index(){
 
-
-        return Inertia::render('Profesor/Index', [
-            'profesores'=>Profesor::with(['signature', 'user'=>function ($query) {
+        $profesores = Profesor::query()
+            ->with(['signature', 'user'=>function ($query) {
                 $query->select('id', 'name', 'lastname', 'username', 'email');
-            }])->filter(request(['asignatura', 'buscar']))->get()
-        ]);      
-    }
+            }])->filter(request(['asignatura', 'buscar']))->paginate(10)->withQueryString()->through(fn($profesor) => [
+                    'id'=>$profesor->id,
+                    'name'=>$profesor->user->name,
+                    'lastname'=>$profesor->user->lastname,
+                    'username'=>$profesor->user->username,
+                    'email'=>$profesor->user->email,
+                    'signature'=>$profesor->signature->pluck('nombre')
+                ]
+            );   
+        
+
+
+        return Inertia::render('Profesor/Index',[
+            'profesores'=>$profesores
+        ]);
+
 //        return Inertia::render('Profesor/Index', [
-//            'profesores'=>Profesor::query()
-//            ->when(Request::input('buscar'), function($query, $search){
-//                $query->where('name', 'like', '%' . $search . '%');
-//
-//            })
-//            ->paginate(10)
-//            ->withQueryString()
-//            ->through(fn($user)=>[
-//                'name'=>$user->name,
-//                'id'=>$user->id
-//            ]),
-//            'filter'=>Request::only(['search'])
-//
-//        ]);
+//            'profesores'=>Profesor::with(['signature', 'user'=>function ($query) {
+//                $query->select('id', 'name', 'lastname', 'username', 'email');
+//            }])->filter(request(['asignatura', 'buscar']))->get()
+//        ]);      
+    }
+
 
     public function create(){
 

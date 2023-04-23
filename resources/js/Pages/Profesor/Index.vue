@@ -1,21 +1,51 @@
 <script setup>
+
+
+
     import {Head, Link} from '@inertiajs/vue3';
     import AppLayout from '@/Layouts/AppLayout.vue';
     import Body from '../../Components/Body.vue';
-    import Title from '@/Components/title.vue';
-    defineProps({
-        profesores: Array
+    import Title from '@/Components/Title.vue';
+    import { ref, watch } from 'vue';
+    import {router} from '@inertiajs/vue3';
+    import Pagination from '@/Components/Pagination.vue'
 
-    });
+    defineProps({
+                profesores: Object
+
+            });
+
+    let buscar = ref('');
+    
+    watch(buscar, value => {
+        router.get('/profesores', {buscar: value},{
+            preserveState: true,
+            replace: true
+        });
+    }
+    );
+    
+    
 
 
 </script>
+
 
  <template>
     <AppLayout title="Profesores">
         <template #header>
             <Title>
-                Profesor
+                <div class="flex justify-between">
+                    Profesor
+                    <input 
+                        class="border border-gray-300 rounded"
+                        type="text"
+                        name="search"
+                        placeholder="¿Que quieres buscar?"
+                        v-model="buscar"
+                        >
+                </div>
+                
             </Title>
 
 
@@ -32,21 +62,21 @@
                     <div class="border-b border-gray-200 sm:rounded-lg shadow overflow-auto" >
                         <table class="min-w-full divide-y divide-gray-200">
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="profesor in profesores" :key="profesor.id">
+                                <tr v-for="profesor in profesores.data" :key="profesor.id">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div clas="flex item-center">
                                             <div>
                                                 <div class="text-sm font-medium text-gray-900">
                                                     <div>
-                                                        Nombre: {{ profesor.user.name }} {{ profesor.user.lastname }}
+                                                        Nombre: {{ profesor.name }} {{ profesor.lastname }}
                                                     </div>
                                                 
                                                     <div>
-                                                        Email: {{ profesor.user.email }}
+                                                        Email: {{ profesor.email }}
                                                     </div>
 
                                                     <div v-for="signatures in profesor.signature" class="border border-gray-200 mt-2 rounded p-2">
-                                                        Asignatura: {{ signatures.nombre }} 
+                                                        Asignatura: {{ signatures }} 
                                                     </div>
                                                 </div>
                                             </div>
@@ -54,7 +84,7 @@
                                     </td>
                                 
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-900"> Ver Perfil </a>
+                                        <Link :href="'/sala/'+profesor.username" class="text-indigo-600 hover:text-indigo-900"> Ver Perfil </Link>
                                     </td>
                                 </tr>
                             </tbody>
@@ -62,6 +92,9 @@
                     </div>
                 </div>
             </div>
+
+            <Pagination :links="profesores.links"/>
+
             <nav>
             
                 <ul>
