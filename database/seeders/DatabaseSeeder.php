@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Profesor;
 use App\Models\Clase;
 use App\Models\Signature;
+use App\Models\Contenido;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,12 +37,8 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'Biología'
         ]);
         
-        \App\Models\User::factory(100)->create();
+        User::factory(100)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
 
 
         $user1 = User::create([
@@ -85,17 +82,28 @@ class DatabaseSeeder extends Seeder
             'user_id'=>$user1->id
         ])->signature()->attach(rand(1,6));
 
+        $user1->teacher= true;
+        $user1->save();
+
         $profesor2 = Profesor::create([
             'user_id'=>$user2->id
 
 
         ])->signature()->attach(2);
+        
+        $user2->teacher = true;
+        $user2->save();
+
 
         $profesor3 = Profesor::create([
             'user_id'=>$user3->id
 
 
         ])->signature()->attach(rand(1,6));
+        
+        $user3->teacher= true;
+        $user3->save();
+
 
         for($x = 1; $x <= 30; $x++){
             $usuario = User::factory()->create();
@@ -104,31 +112,64 @@ class DatabaseSeeder extends Seeder
                 'user_id'=>$usuario->id
             ]);
 
+            $usuario->teacher = true;
+            $usuario->save();
             $profe->signature()->attach(rand(1,6));
         }
 
+        
+        Contenido::factory()->contentsMat();
+
+        for($i=0; $i<10; $i++){
+            Contenido::factory()->contentHist();
+
+        }
+
+        for($i=0; $i<10; $i++){
+            Contenido::factory()->contentQuim();
+
+        }
+
+        for($i=0; $i<10; $i++){
+            Contenido::factory()->contentIng();
+
+        }
+
+        for($i=0; $i<10; $i++){
+            Contenido::factory()->contentFis();
+
+        }
+
+        for($i=0; $i<10; $i++){
+            Contenido::factory()->contentBio();
+
+        }
+ 
         Clase::create([
             'profesor_id'=>2,
-            'signature_id'=>2,
+            'contenido_id'=>1,
+            'summary'=>'nose',
             'title'=>'hola gente',
             'body'=>'muchas cosas'
         ]);
 
         Clase::create([
             'profesor_id'=>2,
-            'signature_id'=>2,
+            'contenido_id'=>2,
+            'summary'=>'nose',
             'title'=>'otra cosa',
             'body'=>'blablablablablalba x blabla'
         ]);
 
         Clase::create([
             'profesor_id'=>2,
-            'signature_id'=>2,
+            'contenido_id'=>3,
+            'summary'=>'nose',
             'title'=>'capuchino',
             'body'=>'te gusta el capuchino, ¿vainilla quizas?'
         ]);
 
-        Clase::factory(40)->create();
+        Clase::factory(100)->create();
 
     }
 }

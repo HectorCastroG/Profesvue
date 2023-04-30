@@ -19,8 +19,12 @@ class ClaseFactory extends Factory
         return [
             'title'=>$this->faker->text(),
             'body'=>$this->faker->paragraph(),
-            'profesor_id'=>rand(1,100),
-            'signature_id'=>rand(1,6)
+            'summary'=>$this->faker->paragraph(),
+            'pkey1'=>$this->faker->word(),
+            'pkey2'=>$this->faker->word(),
+            'pkey3'=>$this->faker->word(),
+            'profesor_id'=>rand(1,35),
+            'contenido_id'=>rand(37,86)
 
         ];
     }

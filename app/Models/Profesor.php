@@ -15,7 +15,8 @@ class Profesor extends Model
     protected $fillable = [
         'Signature_id',
         'user_id',
-        'signature'
+        'signature',
+        'user'
 
     ];
 
