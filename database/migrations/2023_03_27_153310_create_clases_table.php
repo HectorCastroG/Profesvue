@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('pkey2')->nullable();
             $table->string('pkey3')->nullable();
             $table->foreignId('profesor_id');
-            $table->foreignId('signature_id');
+            $table->foreignId('contenido_id');
             $table->timestamps();
         });
     }

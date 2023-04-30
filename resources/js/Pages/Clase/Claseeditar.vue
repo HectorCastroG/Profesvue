@@ -17,7 +17,8 @@
         _method: 'PUT',
         title: props.clase.title,
         body: props.clase.body,
-        signature_id: props.clase.signature_id
+        signature_id: props.clase.signature_id,
+        summary: props.clase.summary
     });
 
     let submit = () => {
@@ -69,6 +70,22 @@
                         required>
 
                         {{ clase.body }}
+                    </TextAreacomp>
+
+                    
+                    <InputLabel for="summary" value="Resumen"/>
+                
+                    <TextAreacomp
+                        v-model="form.summary"
+                        class="border border-gray-400 p-2 w-full"
+                        type="text"
+                        name="summary"
+                        id="summary"
+
+
+                        required>
+
+                        {{ clase.summary }}
                     </TextAreacomp>
 
                     <select name="signature_id" id="signature_id" v-model="form.signature_id">

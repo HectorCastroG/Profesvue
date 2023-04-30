@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use App\Models\Clase;
 use App\Models\User;
@@ -18,24 +19,44 @@ class ClaseController extends Controller
 
     public function index(){
 
+        $clases = Clase::query()->with(['profesor', 'contenido'])
+        ->filter(request(['buscar', 'contenido']))
+        ->paginate(10)->withQueryString()->through(fn($clase)=>[
+            'id'=>$clase->id,
+            'title'=>$clase->title,
+            'summary'=>$clase->summary,
+            'pkey1'=>$clase->pkey1,
+            'pkey2'=>$clase->pkey2,
+            'pkey3'=>$clase->pkey3,
+            'profesor'=>($clase->profesor ? $clase->profesor->user->name .' '. $clase->profesor->user->lastname : null),
+            'signature'=>$clase->contenido->signature->nombre,
+            'content'=>$clase->contenido->content
+
+        ]);
+        
+
         return Inertia::render('Clase/Index', [
-            'clases' => Clase::all()
+            'clases' => $clases
         ]);
     }
 
-    public function nuevo(Request $request){
+    public function nuevo(){
 
-        $request->validate([
+        $request = Request::validate([
             'titulo'=> 'required',
             'cuerpo' => 'required',
-            'signature_id'=>'required'
+            'signature_id'=>'required',
+            'summary'=>'required'
         ]);
+
+
 
         Clase::create([
             'title'=>request('titulo'),
             'body' => request('cuerpo'),
             'profesor_id'=>auth()->user()->profesor->id,
-            'signature_id'=>request('signature_id')
+            'signature_id'=>request('signature_id'),
+            'summary'=>request('summary')
         ]);
 
         return redirect('/inicio');
@@ -60,20 +81,24 @@ class ClaseController extends Controller
         ]);
     }
 
-    public function update(Request $request, Clase $clase){
+    public function update(Clase $clase){
+    $request = Request::validate([
+        'title' => 'required|max:255',
+        'body' => 'required',
+        'signature_id' => 'required',
+        'summary' => 'required'
+    ]);
 
-        $request->validate([
-            'title'=>'required|max:255',
-            'body'=>'required',
-            'signature_id'=>'required',
+    $clase->update([
+        'title' => $request['title'],
+        'body' => $request['body'],
+        'signature_id' => $request['signature_id'],
+        'summary' => $request['summary']
+    ]);
 
-        ]);
-
-         $clase->update($request->all());
-
-        return redirect('/');
-
+    return redirect('/');
     }
+
 
     public function destroy(Clase $clase){
         

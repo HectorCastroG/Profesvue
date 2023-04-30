@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -25,6 +25,8 @@ const switchToTeam = (team) => {
 const logout = () => {
     router.post(route('logout'));
 };
+
+const user = computed(() => usePage().props.auth.user)
 </script>
 
 <template>
@@ -56,11 +58,15 @@ const logout = () => {
                                     Profesores
                                 </NavLink>
 
-                                <NavLink :href="route('profesores.create')" :active="route().current('profesores.create')">
+                                <NavLink :href="route('contenido')" :active="route().current('contenido')">
+                                    Contenidos
+                                </NavLink>
+
+                                <NavLink v-if="user.teacher == false" :href="route('profesores.create')" :active="route().current('profesores.create')">
                                     Se Profesor
                                 </NavLink>
 
-                                <NavLink :href="route('Usuarios')" :active="route().current('Usuarios')">
+                                <NavLink v-if="user.admin" :href="route('Usuarios')" :active="route().current('Usuarios')">
                                     Usuarios
                                 </NavLink>
 
@@ -68,11 +74,11 @@ const logout = () => {
                                     Clases
                                 </NavLink>
 
-                                <NavLink :href="route('clase.create')" :active="route().current('clase.create')">
+                                <NavLink v-if="user.teacher" :href="route('clase.create')" :active="route().current('clase.create')">
                                     Crear Clase
                                 </NavLink>
 
-                                <NavLink :href="route('Misala')" :active="route().current('Misala')">
+                                <NavLink v-if="user.teacher" :href="route('Misala')" :active="route().current('Misala')">
                                     Mi Sala
                                 </NavLink>
                             </div>

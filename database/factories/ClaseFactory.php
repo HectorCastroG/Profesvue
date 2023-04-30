@@ -24,7 +24,7 @@ class ClaseFactory extends Factory
             'pkey2'=>$this->faker->word(),
             'pkey3'=>$this->faker->word(),
             'profesor_id'=>rand(1,35),
-            'signature_id'=>rand(1,6)
+            'contenido_id'=>rand(37,86)
 
         ];
     }

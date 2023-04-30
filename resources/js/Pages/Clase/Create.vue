@@ -14,7 +14,8 @@
     let form = useForm({
         titulo:'',
         cuerpo:'',
-        signature_id:''
+        signature_id:'',
+        summary:''
     });
 
     let submit = () => {
@@ -37,7 +38,7 @@
         <Body>
             <div class="border border-gray-400 p-2 text-gray-600 text-xl mb-6 sm:rounded-lg">
                 <form @submit.prevent="submit" clase="max-w-md mx-auto mt-8">
-                    <InputLabel for="titulo" value="Titulo"/>
+                    <InputLabel for="titulo" value="Título"/>
                 
                     <TextInput  v-model="form.titulo" 
                         class="border border-gray-400 p-2 w-full"
@@ -58,6 +59,19 @@
                         type="text"
                         name="cuerpo"
                         id="cuerpo"
+                        required>
+                    
+                    </TextAreacomp>
+
+                    <InputLabel for="summary" value="Resumen"/>
+
+
+                    <TextAreacomp
+                        v-model="form.summary"
+                        class="border border-gray-400 p-2 w-full"
+                        type="text"
+                        name="summary"
+                        id="summary"
                         required>
                     
                     </TextAreacomp>

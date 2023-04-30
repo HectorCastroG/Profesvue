@@ -9,6 +9,7 @@ use App\Models\Clase;
 use Illuminate\Support\Facades\Request;
 use Laravel\Jetstream\Rules\Role;
 use App\Http\Controllers\ClaseController;
+use App\Http\Controllers\ContenidoController;
 use App\Http\Controllers\SalasController;
 
 /*
@@ -62,6 +63,10 @@ Route::middleware([
         Route::put('/clase/editar/{clase}', 'update');
         Route::delete('/delete/{clase}', 'destroy')->name('delete.clase');
 
+    });
+
+    Route::controller(ContenidoController::class)->group(function(){
+        Route::get('/contenidos', 'index')->name('contenido');
     });
 
     Route::get('/usuarios', function () {

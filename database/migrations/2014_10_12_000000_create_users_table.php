@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->date('birthday');
             $table->string('email')->unique();
+            $table->boolean('admin')->default(false);
+            $table->boolean('teacher')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
