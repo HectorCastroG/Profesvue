@@ -17,6 +17,29 @@ class signature extends Model
     ];
     use HasFactory;
 
+    public function ejescontenidos()
+    {
+        $contenidos = $this->contenido()->orderBy('eje')->get();
+
+        $resultados = [];
+
+        // Iterar sobre los contenidos y agruparlos por eje
+        foreach ($contenidos as $contenido) {
+            $eje_nombre = $contenido->eje;
+            $contenido_nombre = $contenido->content;
+
+            if (!array_key_exists($eje_nombre, $resultados)) {
+                $resultados[$eje_nombre] = [];
+            }
+
+            $resultados[$eje_nombre][] = $contenido_nombre;
+        }
+
+        return $resultados;
+    }
+
+    
+
     public function contenido(){
             return $this->hasMany(Contenido::class);
     }

@@ -6,23 +6,43 @@
     import TextAreacomp from '../../Components/TextAreacomp.vue';
     import Title from '@/Components/Title.vue';
     import Body from '../../Components/Body.vue';
-    defineProps({
-        signatures: Array
+    import {computed} from 'vue';
+    const props = defineProps({
+        contenidos: Array
 
     });
 
     let form = useForm({
         titulo:'',
         cuerpo:'',
-        signature_id:'',
-        summary:''
+        asignatura:'',
+        summary:'',
+        eje: '',
+        pkey1: '',
+        pkey2: '',
+        pkey3: '',
+        contenido:''
     });
+
+    
 
     let submit = () => {
         form.post('/clase/crear');
     }
+    let signatures = Object.entries(props.contenidos); // lista de todas las signatures
+    let ejes = computed(()=>{
+
+        let selectedSignature = signatures.find(key => key[0] === form.asignatura)
+        return form.asignatura ? selectedSignature[1] : ''
+    });
+
+    let cont = computed(()=>{
+        let selectedEje = form.eje ? Object.entries(ejes.value).find(eje => eje[0] === form.eje) : ['nada']
+        return selectedEje[1] ? selectedEje[1] : ''
+    });
 
 
+ 
 </script>
 
 <template>
@@ -31,11 +51,14 @@
         <template #header>
             <Title>
                 Crear Clase:
+                
 
             </Title>
         </template>
 
         <Body>
+
+ 
             <div class="border border-gray-400 p-2 text-gray-600 text-xl mb-6 sm:rounded-lg">
                 <form @submit.prevent="submit" clase="max-w-md mx-auto mt-8">
                     <InputLabel for="titulo" value="Título"/>
@@ -76,13 +99,67 @@
                     
                     </TextAreacomp>
 
-                    <select name="signature_id" id="signature_id" v-model="form.signature_id" >
+                    <InputLabel for="pkey1" value="Palabra Clave:"/>
+                
+                    <TextInput  v-model="form.pkey1" 
+                        class="border border-gray-400 p-2 w-full"
+                        type="text"
+                        name="pkey1"
+                        id="pkey1"
+                        required
+                        autocomplete="Palabra clave"
+
+                    />
+
+                    <InputLabel for="pkey2" value="Palabra Clave:"/>
+                
+                    <TextInput  v-model="form.pkey2" 
+                        class="border border-gray-400 p-2 w-full"
+                        type="text"
+                        name="pkey2"
+                        id="pkey2"
+                        required
+                        autocomplete="Palabra clave"
+
+                    />
+
+                    <InputLabel for="pkey3" value="Palabra Clave:"/>
+                
+                    <TextInput  v-model="form.pkey3" 
+                        class="border border-gray-400 p-2 w-full"
+                        type="text"
+                        name="pkey3"
+                        id="pkey3"
+                        required
+                        autocomplete="Palabra clave"
+
+                    />
+
+                    <select name="asignatura" id="asignatura" v-model="form.asignatura" >
                     
-                        <option v-for="signature in signatures" :value="signature.id">
-                            {{ signature.nombre }}
+                        <option v-for="(key, signature) in Object.entries(contenidos)" :value="key[0]">
+                             {{ key[0] }}
                         </option>
                     
 
+                    </select>
+
+                    <select name="eje" id="eje" v-model="form.eje" >
+                    
+                        <option v-for="(key,eje) in Object.entries(ejes)" :value="key[0]">
+
+                            {{ key[0] }}
+                        </option>
+                
+                    </select>
+
+                    <select name="contenido" id="contenido" v-model="form.contenido" >
+                    
+                    <option v-for="con in cont" :value="con">
+
+                        {{ con }}
+                    </option>
+            
                     </select>
 
 
@@ -92,6 +169,8 @@
                         >
                         Finalizar
                     </button>
+
+
                 </form>
             </div>
         </Body>

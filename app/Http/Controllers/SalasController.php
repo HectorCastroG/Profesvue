@@ -6,17 +6,21 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Profesor;
 use App\Models\User;
+use App\Models\Clase;
 
 class SalasController extends Controller
 {
     public function misala(){
+
+        $clase = Clase::with(['contenido'])->where('profesor_id', '=', auth()->user()->profesor->id)->get();
+
         return Inertia::render('Salas/Misala', [
             'user' => [
                 'name' => auth()->user()->name,
                 'lastname' => auth()->user()->lastname,
                 'username'=> auth()->user()->username,
                 'signatures' => auth()->user()->profesor->signature,
-                'clases'=>auth()->user()->profesor->clase
+                'clases'=> $clase
 
             ]
         ]);

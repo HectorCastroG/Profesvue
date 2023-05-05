@@ -7,13 +7,38 @@ use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use App\Models\Clase;
 use App\Models\User;
+use App\Models\Contenido;
+use App\Models\Signature;
 
 class ClaseController extends Controller
 {
+/*
     public function create(){
 
         return Inertia::render('Clase/Create', [
             'signatures' => auth()->user()->profesor->signature
+        ]);
+    }
+
+*/
+
+    public function create()
+    {
+        $signatures = auth()->user()->profesor->signature;
+
+ 
+        $contents = [];
+
+        foreach ($signatures as $signature) {
+
+            $ejecontenido = $signature->ejescontenidos();
+            $contents[$signature->nombre] = $ejecontenido;
+            }
+
+
+        return Inertia::render('Clase/Create', [
+            'contenidos' => $contents,
+          
         ]);
     }
 
@@ -45,18 +70,30 @@ class ClaseController extends Controller
         $request = Request::validate([
             'titulo'=> 'required',
             'cuerpo' => 'required',
-            'signature_id'=>'required',
-            'summary'=>'required'
+            'summary'=>'required',
+            'pkey1'=>'max:100',
+            'pkey2'=>'max:100',
+            'pkey3'=>'max:100',
+            'asignatura'=>'required',
+            'eje'=>'required',
+            'contenido'=>'required',
         ]);
 
-
+        $signature = Signature::where('nombre', request('asignatura'))->first();
+        $contenido = Contenido::where('signature_id', '=', "$signature->id")
+                        ->where('eje', '=', request('eje'))
+                        ->where('content', '=', request('contenido'))
+                        ->first();
 
         Clase::create([
             'title'=>request('titulo'),
             'body' => request('cuerpo'),
             'profesor_id'=>auth()->user()->profesor->id,
-            'signature_id'=>request('signature_id'),
-            'summary'=>request('summary')
+            'summary'=>request('summary'),
+            'pkey1'=>request('pkey1'),
+            'pkey2'=>request('pkey2'),
+            'pkey3'=>request('pkey3'),
+            'contenido_id'=>$contenido->id
         ]);
 
         return redirect('/inicio');

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Profesor;
 use App\Models\Contenido;
+use App\Models\Signature;
 
 class Clase extends Model
 {
@@ -21,6 +22,7 @@ class Clase extends Model
         'contenido_id'
 
     ];
+    
 
     public function scopeFilter($query, array $filters){
         
