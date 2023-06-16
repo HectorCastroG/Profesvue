@@ -22,6 +22,6 @@ class Contenido extends Model
     }
 
     public function clase(){
-        return $this->belongsTo(Clase::class);
+        return $this->hasMany(Clase::class);
     }
 }

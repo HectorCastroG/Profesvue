@@ -64,14 +64,283 @@ class ContenidoFactory extends Factory
 
     }
 
-    public function contentBio()
+    public function contentsBio()
     {
         Contenido::create([
-            'content' => $this->faker->paragraph(),
-            'eje'=>$this->faker->word(),
-            'explanation'=>$this->faker->text(),
-            'signature_id'=>6
+
+            'content'=> 'Composición química de las células',
+            'explanation' => 'Estudio de los elementos químicos y compuestos presentes en las células, incluyendo proteínas, lípidos, carbohidratos y ácidos nucleicos.',
+            'eje'=> 'Organización estructura y actividad celular',
+            'signature_id' => 6
+
+            
+
         ]);
+
+        Contenido::create([
+
+            'content'=> 'Estructura y función de las organelas celulares',
+            'explanation' => 'Análisis de las diferentes estructuras intracelulares, como el núcleo, mitocondrias, retículo endoplasmático y aparato de Golgi, y su papel en las funciones celulares.',
+            'eje'=> 'Organización estructura y actividad celular',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Membrana celular y transporte de sustancias:',
+            'explanation' => 'Exploración de la estructura de la membrana celular, su permeabilidad selectiva y los mecanismos de transporte de sustancias a través de ella.',
+            'eje'=> 'Organización estructura y actividad celular',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Ciclo celular y control del crecimiento celular',
+            'explanation' => ' Estudio de las diferentes etapas del ciclo celular, regulación de la división celular y los factores que afectan el crecimiento y la proliferación celular.',
+            'eje'=> 'Organización estructura y actividad celular',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Metabolismo celular y producción de energía',
+            'explanation' => 'Análisis de los procesos metabólicos básicos en las células, incluyendo la respiración celular, la fotosíntesis y la síntesis de macromoléculas.',
+            'eje'=> 'Organización estructura y actividad celular',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+
+        Contenido::create([
+
+            'content'=> 'Homeostasis y regulación de los sistemas',
+            'explanation' => 'Exploración de los mecanismos de retroalimentación y control que permiten a los organismos mantener un equilibrio interno estable.',
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Digestión y absorción de nutrientes',
+            'explanation' => 'Estudio de los procesos involucrados en la descomposición de los alimentos y la absorción de los nutrientes necesarios para el funcionamiento del organismo.',
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+
+        Contenido::create([
+
+            'content'=> 'Respiración y transporte de gases',
+            'explanation' => 'Análisis de los procesos respiratorios en organismos aeróbicos, incluyendo la ventilación pulmonar y el intercambio de gases en los tejidos.',
+
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Circulación y sistema cardiovascular',
+            'explanation' => 'Exploración de la estructura y función del sistema circulatorio, incluyendo el corazón, los vasos sanguíneos y la distribución de nutrientes y oxígeno.',
+
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Excreción y sistema urinario',
+            'explanation' => 'Estudio del sistema urinario y los procesos de filtración y eliminación de desechos metabólicos y toxinas del organismo.',
+
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Sistema nervioso y control de la información',
+            'explanation' => 'Análisis del sistema nervioso, incluyendo el sistema nervioso central y periférico, y su papel en la recepción, integración y respuesta a estímulos.',
+
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Sistema endocrino y regulación hormonal',
+            'explanation' => 'Exploración de las glándulas endocrinas y las hormonas que producen, así como su papel en la regulación de procesos fisiológicos y el mantenimiento del equilibrio interno.',
+
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Sistema inmunitario y respuesta inmune',
+            'explanation' => 'Estudio del sistema inmunitario y su capacidad para defender al organismo contra agentes patógenos y mantener la integridad frente a enfermedades.',
+
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+        Contenido::create([
+
+            'content'=> 'Movimiento y sistema musculoesquelético',
+            'explanation' => 'Análisis de la estructura y función del sistema musculoesquelético, incluyendo los músculos, huesos, articulaciones y su papel en el movimiento y soporte del cuerpo.',
+
+            'eje'=> 'Procesos y funciones biológicas',
+            'signature_id' => 6
+
+            
+
+        ]);
+
+
+        Contenido::create([
+            'content' => 'Reproducción celular: mitosis y meiosis',
+            'explanation' => 'Estudio de los procesos de división celular, mitosis y meiosis, y su relación con la herencia y la variabilidad genética.',
+            'eje' => 'Herencia y evolución',
+            'signature_id' => 6
+        ]);
+
+        Contenido::create([
+            'content' => 'Conceptos básicos de genética: genes, alelos, genotipo, fenotipo',
+            'explanation' => 'Exploración de los fundamentos de la genética, incluyendo la estructura del ADN, los genes, los alelos y cómo se expresan en el fenotipo de los organismos.',
+            'eje' => 'Herencia y evolución',
+            'signature_id' => 6
+        ]);
+
+        Contenido::create([
+            'content' => 'Leyes de Mendel y herencia mendeliana',
+            'explanation' => 'Análisis de las leyes de Mendel y cómo explican la transmisión de rasgos hereditarios en los organismos.',
+            'eje' => 'Herencia y evolución',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Cruces de Punnett y determinación de probabilidades genéticas',
+            'explanation' => 'Estudio de los cruces genéticos y el cálculo de probabilidades para predecir la herencia de rasgos en las generaciones futuras.',
+            'eje' => 'Herencia y evolución',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Mutaciones genéticas y su impacto en la diversidad y evolución',
+            'explanation' => 'Exploración de las mutaciones genéticas, cómo ocurren y su importancia en la variabilidad genética y la evolución de las especies.',
+            'eje' => 'Herencia y evolución',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Selección natural y adaptación',
+            'explanation' => 'Análisis del proceso de selección natural y cómo influye en la adaptación de los organismos al ambiente.',
+            'eje' => 'Herencia y evolución',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Especiación y formación de nuevas especies',
+            'explanation' => 'Estudio de los mecanismos que conducen a la formación de nuevas especies y la diversificación de la vida en la Tierra.',
+            'eje' => 'Herencia y evolución',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Evidencias de la evolución: fósiles, anatomía comparada, biogeografía, genética',
+            'explanation' => 'Exploración de las diversas evidencias científicas que respaldan la teoría de la evolución, como los fósiles, la anatomía comparada, la distribución geográfica de los organismos y los estudios genéticos.',
+            'eje' => 'Herencia y evolución',
+            'signature_id' => 6
+        ]);
+        
+        
+
+
+
+        Contenido::create([
+            'content' => 'Interacciones entre los seres vivos y su entorno',
+            'explanation' => 'Estudio de las relaciones ecológicas entre los organismos y su ambiente, incluyendo la competencia, la depredación, la simbiosis y la sucesión ecológica.',
+            'eje' => 'Organismo y ambiente',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Adaptaciones de los organismos a su ambiente',
+            'explanation' => 'Análisis de las adaptaciones morfológicas, fisiológicas y conductuales que permiten a los organismos sobrevivir y reproducirse en su entorno.',
+            'eje' => 'Organismo y ambiente',
+            'signature_id' => 6
+        ]);
+
+        Contenido::create([
+            'content' => 'Ecosistemas y ciclos biogeoquímicos',
+            'explanation' => 'Exploración de los ecosistemas, incluyendo la estructura y función de los mismos, y los ciclos biogeoquímicos como el ciclo del agua, carbono y nitrógeno.',
+            'eje' => 'Organismo y ambiente',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Dinámica de las poblaciones y factores que la afectan',
+            'explanation' => 'Estudio de la dinámica de las poblaciones, incluyendo el crecimiento, la densidad, la distribución y los factores que influyen en ella, como la disponibilidad de recursos y la interacción con otras especies.',
+            'eje' => 'Organismo y ambiente',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Cadenas alimentarias y redes tróficas',
+            'explanation' => 'Análisis de las relaciones alimentarias en los ecosistemas, incluyendo las cadenas alimentarias y las interconexiones en las redes tróficas.',
+            'eje' => 'Organismo y ambiente',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Biodiversidad y conservación',
+            'explanation' => 'Exploración de la diversidad de organismos en la Tierra y la importancia de la conservación de los ecosistemas y las especies.',
+            'eje' => 'Organismo y ambiente',
+            'signature_id' => 6
+        ]);
+        
+        Contenido::create([
+            'content' => 'Impacto humano en el medio ambiente',
+            'explanation' => 'Análisis de las actividades humanas y su impacto en los ecosistemas, incluyendo la deforestación, la contaminación, el cambio climático y la pérdida de hábitats.',
+            'eje' => 'Organismo y ambiente',
+            'signature_id' => 6
+        ]);
+        
+        
+        
 
     }
 

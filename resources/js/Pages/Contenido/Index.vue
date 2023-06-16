@@ -4,7 +4,7 @@
     import Body from '../../Components/Body.vue';
     defineProps({
 
-        contenidos: Array
+        contenidos: Object
     });
 
 
@@ -21,13 +21,24 @@
         </template>
 
         <Body>
-            <div v-for="signature in contenidos" class="mt-4">
-            
-                {{ signature.nombre }}
 
-                <div v-for="content in signature.contenido" class="border border-gray-200">
+            <div v-for="(key, signature) in Object.entries(contenidos)" class="mt-4 border border-gray-400">
+            
+                <div class="uppercase">
+                    {{ key[0]}}
+
+                </div>
+
                 
-                    {{ content.content }}
+
+                <div v-for="(key, ejes) in Object.entries(key[1])" class="border border-gray-200">
+                
+                    Eje: {{ key[0] }}
+
+
+                    <div v-for="(key, content) in Object.entries(key[1])">
+                        {{key[1]  }}
+                    </div>
                 </div>
             </div>
         </Body>

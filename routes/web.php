@@ -1,16 +1,15 @@
 <?php
 
+use App\Http\Controllers\AdministratorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProfesorController;
-use App\Models\User;
-use App\Models\Clase;
-use Illuminate\Support\Facades\Request;
-use Laravel\Jetstream\Rules\Role;
 use App\Http\Controllers\ClaseController;
 use App\Http\Controllers\ContenidoController;
 use App\Http\Controllers\SalasController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\SesionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,22 +68,17 @@ Route::middleware([
         Route::get('/contenidos', 'index')->name('contenido');
     });
 
-    Route::get('/usuarios', function () {
-        return Inertia::render('Usuarios', [
-            'users'=>User::query()
-            ->when(Request::input('search'), function($query, $search){
-                $query->where('name', 'like', '%' . $search . '%');
+    Route::controller(AdministratorController::class)->group(function(){
+        Route::get('/usuarios', 'usuarios')->name('Usuarios');
+    });
+    
+    Route::controller(CalendarController::class)->group(function(){
+        Route::get('/calendar', 'calendar')->name('calendar');
+    });
 
-            })
-            ->paginate(10)
-            ->withQueryString()
-            ->through(fn($user)=>[
-                'name'=>$user->name,
-                'id'=>$user->id
-            ]),
-            'filter'=>Request::only(['search'])
-
-        ]);
-    })->name('Usuarios');
+    Route::controller(SesionController::class)->group(function(){
+        Route::post('/sesion/crear', 'create');
+        Route::get('/sesion', 'sesion')->name('sesion');
+    });
 
 });

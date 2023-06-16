@@ -66,4 +66,10 @@ class User extends Authenticatable
     public function profesor(){
         return $this->hasOne(Profesor::class);
     }
+
+    public function sesion()
+{
+    return $this->belongsToMany(Sesion::class);
+}
+
 }

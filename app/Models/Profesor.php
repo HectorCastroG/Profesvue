@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Clase;
 use App\Models\Signature;
+use App\Models\Sesion;
 
 class Profesor extends Model
 {
@@ -48,4 +49,10 @@ class Profesor extends Model
     public function signature(){
         return $this->belongsToMany(Signature::class);
     }
+
+    public function sesion(){
+        return $this->hasMany(Sesion::class);
+    }
+
+    
 }

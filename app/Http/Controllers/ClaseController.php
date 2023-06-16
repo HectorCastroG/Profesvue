@@ -33,7 +33,7 @@ class ClaseController extends Controller
 
             $ejecontenido = $signature->ejescontenidos();
             $contents[$signature->nombre] = $ejecontenido;
-            }
+        }
 
 
         return Inertia::render('Clase/Create', [
@@ -110,9 +110,26 @@ class ClaseController extends Controller
 
     public function claseeditar(Clase $clase){
 
+        $signatures = auth()->user()->profesor->signature;
+
+ 
+        $contents = [];
+
+        foreach ($signatures as $signature) {
+
+            $ejecontenido = $signature->ejescontenidos();
+            $contents[$signature->nombre] = $ejecontenido;
+        }
+
         return Inertia::render('Clase/Claseeditar', [
             'clase' => $clase,
-            'signatures' => auth()->user()->profesor->signature
+            'contenido' => [
+                'signature' => $clase->contenido->signature->nombre,
+                'eje'=>$clase->contenido->eje,
+                'content'=>$clase->contenido->content
+            ],
+            'contenidos'=> $contents,
+            'asig'
 
 
         ]);
@@ -122,15 +139,30 @@ class ClaseController extends Controller
     $request = Request::validate([
         'title' => 'required|max:255',
         'body' => 'required',
-        'signature_id' => 'required',
+        'pkey1'=>'max:100',
+        'pkey2'=>'max:100',
+        'pkey3'=>'max:100',
+        'asignatura' => 'required',
+        'eje'=>'required',
+        'contenido'=>'required',
         'summary' => 'required'
     ]);
 
+    $signature = Signature::where('nombre', request('asignatura'))->first();
+    $contenido = Contenido::where('signature_id', '=', "$signature->id")
+                    ->where('eje', '=', request('eje'))
+                    ->where('content', '=', request('contenido'))
+                    ->first();
+ 
     $clase->update([
         'title' => $request['title'],
         'body' => $request['body'],
-        'signature_id' => $request['signature_id'],
-        'summary' => $request['summary']
+        'pkey1'=>$request['pkey1'],
+        'pkey2'=>$request['pkey2'],
+        'pkey3'=>$request['pkey3'],
+        'summary' => $request['summary'],
+        'contenido_id'=>$contenido->id
+
     ]);
 
     return redirect('/');

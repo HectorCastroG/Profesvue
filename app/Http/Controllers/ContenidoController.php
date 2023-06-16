@@ -11,9 +11,23 @@ class ContenidoController extends Controller
 {
     public function index(){
 
+        $signatures = Signature::all();
 
-        return Inertia::render('Contenido/Index',[
-            'contenidos' => Signature::with('contenido')->get()
+
+ 
+        $contents = [];
+
+        foreach ($signatures as $signature) {
+
+            $ejecontenido = $signature->ejescontenidos();
+            $contents[$signature->nombre] = $ejecontenido;
+        }
+
+
+        return Inertia::render('Contenido/Index', [
+            'contenidos' => $contents,
+          
         ]);
+
     }
 }

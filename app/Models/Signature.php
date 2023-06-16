@@ -38,6 +38,20 @@ class signature extends Model
         return $resultados;
     }
 
+//    public function entregaContenidos($sign){
+//        $signatures = $sign;
+//
+//
+// 
+//        $contents = [];
+//
+//        foreach ($signatures as $signature) {
+//
+//            $ejecontenido = $signature->ejescontenidos();
+//            $contents[$signature->nombre] = $ejecontenido;
+//        }
+//    }
+//
     
 
     public function contenido(){

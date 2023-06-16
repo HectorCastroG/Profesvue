@@ -9,6 +9,9 @@ use App\Models\Profesor;
 use App\Models\Clase;
 use App\Models\Signature;
 use App\Models\Contenido;
+use App\Models\Sesion;
+use Carbon\Carbon;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -115,10 +118,13 @@ class DatabaseSeeder extends Seeder
             $usuario->teacher = true;
             $usuario->save();
             $profe->signature()->attach(rand(1,6));
+
         }
 
         
         Contenido::factory()->contentsMat();
+
+        Contenido::factory()->contentsBio();
 
         for($i=0; $i<10; $i++){
             Contenido::factory()->contentHist();
@@ -140,10 +146,6 @@ class DatabaseSeeder extends Seeder
 
         }
 
-        for($i=0; $i<10; $i++){
-            Contenido::factory()->contentBio();
-
-        }
  
         Clase::create([
             'profesor_id'=>2,
@@ -170,6 +172,36 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Clase::factory(100)->create();
+
+        $startDate = Carbon::now()->addWeeks(1); // Fecha de inicio en una semana
+        $endDate = Carbon::now()->addWeeks(2); // Fecha de finalización en dos semanas
+
+        for ($i = 1; $i <= 20; $i++) {
+            $sessionDate = Carbon::parse($startDate)->addDays(rand(0, 13))->format('Y-m-d');
+            $startTime = Carbon::createFromTime(rand(8, 16), rand(0, 59), 0)->format('H:i:s');
+            $endTime = Carbon::parse($startTime)->addHour()->format('H:i:s');
+        
+            Sesion::create([
+                'fecha' => $sessionDate,
+                'horainicio' => $startTime,
+                'horacierre' => $endTime,
+                'profesor_id'=>rand(1,30)
+            ]);
+        }
+
+        $sesiones = Sesion::all();
+        $usuarios = User::all();
+        $clases = Clase::all();
+    
+        // Asignar sesiones a usuarios
+        foreach ($usuarios as $usuario) {
+            $usuario->sesion()->attach($sesiones->random(rand(1, 5))->pluck('id'));
+        }
+    
+        // Asignar sesiones a clases
+        foreach ($clases as $clase) {
+            $clase->sesion()->attach($sesiones->random(rand(1, 3))->pluck('id'));
+        }
 
     }
 }

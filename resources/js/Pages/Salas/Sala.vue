@@ -39,9 +39,11 @@
                     v-for="asignatura in asignaturas" 
                     class="border border-gray-300 p-6 rounded-lg mt-2 px-7">
                     <p class="uppercase">{{ asignatura.nombre }}</p>
+
+                    
                     <div v-for="clase in clases" >
                         
-                        <div v-if="clase.signature_id === asignatura.id" class="border border-gray-300 p-6 rounded-lg mt-2 px-7 flex">
+                        <div v-if="clase.contenido.signature_id === asignatura.id" class="border border-gray-300 p-6 rounded-lg mt-2 px-7 flex">
                             <p class="w-11/12">{{ clase.title }}</p>
                             <Link 
                                 :href="'/clase/'+user.username+'/'+clase.id" 

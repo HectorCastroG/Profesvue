@@ -62,6 +62,10 @@ const user = computed(() => usePage().props.auth.user)
                                     Contenidos
                                 </NavLink>
 
+                                <NavLink :href="route('calendar')" :active="route().current('calendar')">
+                                    Calendario
+                                </NavLink>
+
                                 <NavLink v-if="user.teacher == false" :href="route('profesores.create')" :active="route().current('profesores.create')">
                                     Se Profesor
                                 </NavLink>

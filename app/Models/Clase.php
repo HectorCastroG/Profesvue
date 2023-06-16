@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Profesor;
 use App\Models\Contenido;
-use App\Models\Signature;
+use App\Models\Sesion;
 
 class Clase extends Model
 {
@@ -50,5 +50,9 @@ class Clase extends Model
 
     public function contenido(){
         return $this->belongsTo(Contenido::class);
+    }
+
+    public function sesion(){
+        return $this->belongsToMany(Sesion::class);
     }
 }

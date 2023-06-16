@@ -27,6 +27,7 @@ class SalasController extends Controller
     }
 
     public function sala(User $user){
+        $clase = Clase::with(['contenido'])->where('profesor_id', '=', $user->profesor->id)->get();
 
         if($user->profesor == null){
             return error_log('El usuario no es un profesor');
@@ -34,7 +35,7 @@ class SalasController extends Controller
             return Inertia::render('Salas/Sala', [
                 'user'=>$user,
                 'asignaturas'=>$user->profesor->signature,
-                'clases'=>$user->profesor->clase
+                'clases'=>$clase
             ]);
         }
 
