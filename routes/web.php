@@ -61,12 +61,13 @@ Route::middleware([
         Route::get('/editar/{clase}', 'claseeditar')->name('clase.editar');
         Route::put('/clase/editar/{clase}', 'update');
         Route::delete('/delete/{clase}', 'destroy')->name('delete.clase');
+        Route::get('/pdf/{filename}', 'pdf')->name('pdf');
 
     });
 
     Route::controller(ContenidoController::class)->group(function(){
         Route::get('/contenidos', 'index')->name('contenido');
-    });
+     });
 
     Route::controller(AdministratorController::class)->group(function(){
         Route::get('/usuarios', 'usuarios')->name('Usuarios');
@@ -78,7 +79,8 @@ Route::middleware([
 
     Route::controller(SesionController::class)->group(function(){
         Route::post('/sesion/crear', 'create');
-        Route::get('/sesion', 'sesion')->name('sesion');
+        Route::post('/inscribir/{sesion:id}', 'inscribir');
+        Route::get('/sesion/{sesion}', 'sesion')->name('sesion');
     });
 
 });

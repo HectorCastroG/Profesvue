@@ -3,10 +3,12 @@
     import AppLayout from '@/Layouts/AppLayout.vue';
     import Body from '../../Components/Body.vue';
     import Title from '@/Components/Title.vue';
+    import Calendario from '../Calendar/Calendario.vue';
     defineProps({
         user: Array,
         asignaturas: Array,
-        clases: Array
+        clases: Array,
+        sesiones: Array
     });
 
 </script>
@@ -30,11 +32,13 @@
                 <div class="border border-gray-300 p-6 rounded-lg mt-2 w-1/2">
                     Su correo electrónico:    {{ user.email }}
                 </div>
-            </div>
+        
 
+            </div>
+            <Calendario :clases="clases" :sesion="sesiones"/>
             <div class="border border-gray-300 p-6 rounded-lg mt-2 px-7">
 
-                Asignaturas 
+                Clases Por Asignaturas 
                 <div 
                     v-for="asignatura in asignaturas" 
                     class="border border-gray-300 p-6 rounded-lg mt-2 px-7">

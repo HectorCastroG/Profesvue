@@ -140,7 +140,7 @@ let updateContenidos = () => {
           </select>
 
           <select name="contenido" id="contenido" v-model="form.contenido">
-            <option v-for="(con, index) in cont" :value="index" :key="index">
+            <option v-for="(con, index) in cont" :value="con" :key="index">
               {{ con }}
             </option>
           </select>
