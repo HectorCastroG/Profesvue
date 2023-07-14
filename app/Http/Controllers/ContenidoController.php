@@ -30,4 +30,5 @@ class ContenidoController extends Controller
         ]);
 
     }
+
 }

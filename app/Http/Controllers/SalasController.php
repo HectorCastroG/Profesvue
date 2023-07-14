@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Profesor;
 use App\Models\User;
 use App\Models\Clase;
+use App\Models\Sesion;
 
 class SalasController extends Controller
 {
@@ -28,6 +29,7 @@ class SalasController extends Controller
 
     public function sala(User $user){
         $clase = Clase::with(['contenido'])->where('profesor_id', '=', $user->profesor->id)->get();
+        $sesiones=Sesion::with(['clase'])->where('profesor_id', '=', $user->profesor->id)->get();
 
         if($user->profesor == null){
             return error_log('El usuario no es un profesor');
@@ -35,7 +37,8 @@ class SalasController extends Controller
             return Inertia::render('Salas/Sala', [
                 'user'=>$user,
                 'asignaturas'=>$user->profesor->signature,
-                'clases'=>$clase
+                'clases'=>$clase,
+                'sesiones'=>$sesiones
             ]);
         }
 

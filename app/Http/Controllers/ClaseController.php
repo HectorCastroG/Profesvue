@@ -174,4 +174,10 @@ class ClaseController extends Controller
         $clase->delete();
         return redirect('/inicio');
     }
+
+    public function pdf($filename){
+        $filePath = '/Users/hectorcastrogiacomozzi/profes/profesvue/resources/pdf/' . $filename;
+
+        return response()->file($filePath);
+    }
 }

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('clases', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->text('title', 40);
             $table->text('body');
-            $table->text('summary');
+            $table->text('summary', 50)->nullable();
             $table->string('pkey1')->nullable();
             $table->string('pkey2')->nullable();
             $table->string('pkey3')->nullable();

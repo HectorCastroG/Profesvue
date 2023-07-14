@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, defineProps} from 'vue';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
         sesion: Array,
@@ -46,6 +47,14 @@ const popoverVisible = ref({});
 const popoverPosition = ref({ x: 0, y: 0 });
 const popoverSesiones = ref([]);
 
+const sortedSesiones = computed(() => {
+  return popoverSesiones.value.sort((a, b) => {
+    // Comparar las horas de inicio
+    if (a.horainicio < b.horainicio) return -1;
+    if (a.horainicio > b.horainicio) return 1;
+    return 0;
+  });
+});
 
 const getDayClass = (day) => {
   if (
@@ -140,12 +149,32 @@ document.addEventListener('click', (event) => {
                   <div>{{ day }}</div>
                   <div v-if="popoverVisible[day]" class="popover" :style="{ top: `${popoverPosition.y}px`, left: `${popoverPosition.x}px` }">
                     <button @click="closePopover(day)" class="popover-close">Cerrar</button>
-                    <div v-for="sesion in popoverSesiones" :key="sesion.id">
-                      Sesión: {{ sesion.horainicio }} a {{ sesion.horacierre }}
+                    <div v-for="sesion in sortedSesiones" :key="sesion.id">
+                      <table>
+                        <tr>
+                          <th>Inicio</th>
+                          <th>Cierre</th>
+                          <th>clases</th>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <td>{{ sesion.horainicio }}</td>
+                          <td>{{ sesion.horacierre }}</td>
+                          <td>algo</td>
+                          <td>                      <Link
+                        :href="route('sesion', {sesion: sesion.id})" 
+                        class="w-1/12 text-blue-500">
+                        Ver Sesion 
+                      </Link></td>
+                        </tr>
+
+                      </table>
                       <div v-for="clase in sesion.clase">
                         {{ clase.title }}
 
                       </div>
+
+
 
                     </div>
                   </div>

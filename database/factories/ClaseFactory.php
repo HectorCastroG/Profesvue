@@ -17,9 +17,9 @@ class ClaseFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'=>$this->faker->text(),
+            'title'=>$this->faker->text(50),
             'body'=>$this->faker->paragraph(),
-            'summary'=>$this->faker->paragraph(),
+            'summary'=>$this->faker->text(50),
             'pkey1'=>$this->faker->word(),
             'pkey2'=>$this->faker->word(),
             'pkey3'=>$this->faker->word(),
