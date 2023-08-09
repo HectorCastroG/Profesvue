@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Clase;
 use App\Models\Signature;
 use App\Models\Sesion;
+use App\Models\Plan;
 
 class Profesor extends Model
 {
@@ -52,6 +53,10 @@ class Profesor extends Model
 
     public function sesion(){
         return $this->hasMany(Sesion::class);
+    }
+
+    public function plan(){
+        return $this->hasMany(Plan::class);
     }
 
     

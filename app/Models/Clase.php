@@ -19,7 +19,9 @@ class Clase extends Model
         'pkey2',
         'pkey3',
         'profesor_id',
-        'contenido_id'
+        'contenido_id',
+        'pathpresentation',
+        'pathguide'
 
     ];
     

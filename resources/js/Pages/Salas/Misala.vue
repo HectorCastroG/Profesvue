@@ -3,8 +3,12 @@
     import AppLayout from '@/Layouts/AppLayout.vue';
     import Title from '@/Components/Title.vue';
     import Body from '../../Components/Body.vue';
+    import Postcreate from './Post/Postcreate.vue';
+    import Postshow from './Post/Postshow.vue';
+    import Pagination from '@/Components/Pagination.vue';
     defineProps({
-        user: Array
+        user: Object,
+        posts: Array
     });
 
 
@@ -21,7 +25,24 @@
         </template>
 
         <Body>
-            <div>
+
+            <div class="border border-slate-200 m-8">
+                <Postcreate/>
+            </div>
+            <div class="m-2 mt-2 border rounded ml-8 mr-8">
+                <p class="ml-52 mt-4">                Mis Post</p>
+                
+                <div v-for="post in posts.data" class="m-8 ml-52 mr-52 border bg-slate-50 rounded">
+                    <Postshow :post="post"/>
+
+
+                </div>
+                <Pagination :links="posts.links" class="ml-52 mr-52 mb-4"/>
+
+            </div>
+
+
+            <div class="border border-gray-200 m-8">
                 Asignaturas 
                 <div 
                     v-for="asignatura in user.signatures" 

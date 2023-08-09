@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Profesor;
 use App\Models\Clase;
 use App\Models\Contenido;
+use App\Models\Plan;
 
 class signature extends Model
 {
@@ -64,5 +65,9 @@ class signature extends Model
 
     public function clase(){
         return $this->hasOne(Clase::class);
+    }
+
+    public function plan(){
+        return $this->hasMany(Plan::class);
     }
 }

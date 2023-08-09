@@ -78,6 +78,10 @@ const user = computed(() => usePage().props.auth.user)
                                     Clases
                                 </NavLink>
 
+                                <NavLink v-if="user.teacher" :href="route('misplanes')" :active="route().current('misplanes')">
+                                    Mis Planes
+                                </NavLink>
+
                                 <NavLink v-if="user.teacher" :href="route('clase.create')" :active="route().current('clase.create')">
                                     Crear Clase
                                 </NavLink>

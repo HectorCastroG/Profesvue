@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clase_sesion', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->text('comment');
+            $table->foreignId('post_id');
+            $table->foreignId('user_id');
             $table->timestamps();
-            $table->foreignId('clase_id')->references('id')->on('clases')->onDelete('cascade');
-            $table->foreignId('sesion_id')->references('id')->on('sesions')->onDelete('cascade');
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clase_sesion');
+        Schema::dropIfExists('comments');
     }
 };

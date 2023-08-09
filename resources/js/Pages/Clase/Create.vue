@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 import InputLabel from '../../Components/InputLabel.vue';
@@ -9,7 +10,7 @@ import Body from '../../Components/Body.vue';
 import { computed } from 'vue';
 
 const props = defineProps({
-  contenidos: Array,
+  contenidos: Object,
 });
 
 let form = useForm({
@@ -18,14 +19,57 @@ let form = useForm({
   asignatura: '',
   summary: '',
   eje: '',
+  presentacion: null,
+  guia: null,
   pkey1: '',
   pkey2: '',
   pkey3: '',
   contenido: '',
 });
 
-let submit = () => {
-  form.post('/clase/crear');
+const presentacionInput = ref(null);
+const guiaInput = ref(null);
+
+const submit = () => {
+  if(presentacionInput.value){
+    form.presentacion = presentacionInput.value.files[0]
+
+  }
+  if(guiaInput.value){
+    form.guia = guiaInput.value.files[0]
+
+  }
+    form.post('/clase/crear');
+};
+
+const updatePresentacionPreview = () => {
+  const presentacionFile = presentacionInput.value.files[0];
+
+  if (!presentacionFile) return;
+
+  // Realiza cualquier acción necesaria con el archivo seleccionado, como obtener una vista previa, validar el tipo y tamaño, etc.
+
+  // Por ejemplo, para obtener una vista previa de la presentación y mostrarla en la interfaz, podrías hacer algo como esto:
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    form.presentacion = e.target.result; // Actualiza el valor de form.presentacion con la vista previa del archivo
+  };
+  reader.readAsDataURL(presentacionFile);
+};
+
+const updateGuiaPreview = () => {
+  const guiaFile = guiaInput.value.files[0];
+
+  if (!guiaFile) return;
+
+  // Realiza cualquier acción necesaria con el archivo seleccionado, como obtener una vista previa, validar el tipo y tamaño, etc.
+
+  // Por ejemplo, para obtener una vista previa de la presentación y mostrarla en la interfaz, podrías hacer algo como esto:
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    form.guia = e.target.result; // Actualiza el valor de form.presentacion con la vista previa del archivo
+  };
+  reader.readAsDataURL(guiaFile);
 };
 
 
@@ -61,6 +105,9 @@ let updateContenidos = () => {
       <Title>Crear Clase:</Title>
     </template>
     <Body>
+      {{ form.presentacion }}
+
+
       <div class="border border-gray-400 p-2 text-gray-600 text-xl mb-6 sm:rounded-lg">
         <form @submit.prevent="submit" class="max-w-md mx-auto mt-8">
           <InputLabel for="titulo" value="Título" />
@@ -74,7 +121,7 @@ let updateContenidos = () => {
             autocomplete="Titulo"
           />
 
-          <InputLabel for="cuerpo" value="Clase" />
+          <InputLabel for="cuerpo" value="Descripcion de la clase" />
           <TextAreacomp
             v-model="form.cuerpo"
             class="border border-gray-400 p-2 w-full"
@@ -126,6 +173,34 @@ let updateContenidos = () => {
             required
             autocomplete="Palabra clave"
           />
+
+          <InputLabel for="presentacion" value="Presentación:" />
+          <Input
+            class="border border-gray-400 p-2 w-full"
+            ref="presentacionInput"
+            type="file"
+            name="presentacion"
+            id="presentacion"
+            required
+            autocomplete="presentacion"
+            @change="updatePresentacionPreview"
+
+          />
+
+          <InputLabel for="guia" value="Guía:" />
+
+          <Input
+            class="border border-gray-400 p-2 w-full"
+            ref="guiaInput"
+            type="file"
+            name="guia"
+            id="guia"
+            required
+            autocomplete="guia"
+            @change="updateGuiaPreview"
+
+          />
+
 
           <select name="asignatura" id="asignatura" v-model="form.asignatura" @change="updateEjes">
             <option v-for="asignatura in asignaturas" :value="asignatura" :key="asignatura">

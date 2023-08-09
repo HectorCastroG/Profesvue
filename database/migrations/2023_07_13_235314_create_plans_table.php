@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->text('name', 40);
+            $table->text('informacion', 80);
+            $table->foreignId('signature_id');
+            $table->foreignId('profesor_id');
             $table->timestamps();
         });
     }
