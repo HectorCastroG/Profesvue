@@ -8,6 +8,7 @@
   import Title from '../../Components/Title.vue';
   import { ElCheckbox, ElCheckboxGroup, ElPopover,ElMessageBox} from 'element-plus';
   import Calendario from './Calendario.vue';
+  import { Link } from '@inertiajs/vue3';
   
   const props = defineProps({
           sesion: Array,
@@ -130,6 +131,59 @@
           </ul>
         </div>
       </template>
+
+      <table class="text-xs border-gray-300 border w-full">
+
+        <tr class="border-gray-200 border p-2 bg-slate-200 w-full">
+          <th class="border border-gray-500 w-1/6">Fecha</th>
+          <th class="border border-gray-500 w-1/6">Hora Inicio</th>
+          <th class="border border-gray-500 w-1/6">Hora Cierre</th>
+          <th class="border border-gray-500">Clases</th>
+          <th class="border border-gray-500 w-1/12">crud</th>
+        </tr>
+        <tr v-for="sesion in props.sesion" :key="sesion.id" class="border border-gray-100">
+          <td class="border border-gray-200">
+            {{ sesion.fecha }}
+          </td>
+          <td class="border border-gray-200">
+              {{sesion.horainicio}}
+          </td> 
+          <td class="border border-gray-200">
+              {{sesion.horacierre}}
+          </td> 
+          <td class="border border-gray-200">
+            <table class="w-full">
+              <tr class="border border-gray-200  ">
+              <th class="border w-1/4">Titulo</th>
+              <th class="border">Resumen</th>
+            </tr>
+            <tr v-for="clase in sesion.clase" class="border border-gray-100">
+              <td class="border">{{ clase.title }}</td>
+              <td class="border">{{ clase.summary }}</td>
+            </tr> 
+            </table>
+              
+          </td>
+          <td>
+                
+            <Link 
+              :href="'/editarsesion/'+sesion.id"
+              as="button" 
+              type="button"
+              class="rounded-sm bg-slate-50 border border-slate-400 p-1 mr-1">editar</Link>
+            <Link 
+              :href="'/deletesesion/'+sesion.id" 
+              as="button" 
+              type="button" 
+              method="delete" 
+              :data="{sesion: sesion.id}"
+              class="rounded-sm bg-slate-50 border border-slate-400 p-1 "
+            >
+              Borrar
+            </Link>
+          </td>
+        </tr>
+      </table>
     </Body>
   </AppLayout>
 </template>

@@ -113,6 +113,55 @@ class SesionController extends Controller
         $sesion->user()->attach($user->id);
         return Redirect::route('inicio');
     }
+
+    public function destroy(Sesion $sesion){
+        $sesion->delete();
+        return redirect('/calendar');
+    }
+
+    public function update(Sesion $sesion){
+        $request = Request::validate([
+            'fecha' => 'required',
+            'horainicio'=>'required',
+            'horacierre'=>'required',
+            'checkedClases'=>'required'
+        ]);
+
+    
+        $sesion->update([
+            'fecha'=>$request['fecha'],
+            'horainicio'=>$request['horainicio'],
+            'horacierre'=>$request['horacierre'],
+         ]);
+
+         $sesion->clase()->sync(request('checkedClases'));
+
+         return redirect('/calendar');
+    }
+
+    public function editarsesion(Sesion $sesion){
+
+        $clases = $sesion->clase->load('contenido.signature');
+
+        $chckdclases = [];
+        foreach($clases as $clase){
+            array_push($chckdclases, $clase->id);
+        }
+
+        $allclases = $sesion->profesor->clase->load('contenido.signature');
+        return Inertia::render('Sesiones/Show', [
+
+            'sesion'=>[
+                'id'=>$sesion->id,
+                'fecha'=>$sesion->fecha,
+                'horainicio'=>$sesion->horainicio,
+                'horacierre'=>$sesion->horacierre,
+                'clases'=>$allclases
+            ],
+            'chckdclases' => $chckdclases
+
+        ]);
+    }
     
 
 }

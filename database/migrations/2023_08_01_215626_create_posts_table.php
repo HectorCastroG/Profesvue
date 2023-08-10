@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clase_sesion', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('body');
+            $table->string('pkey1');
+            $table->boolean('discusion');
+            $table->boolean('privacy')->default(1);
+            $table->string('pkey2');
+            $table->foreignId('user_id');
             $table->timestamps();
-            $table->foreignId('clase_id')->references('id')->on('clases')->onDelete('cascade');
-            $table->foreignId('sesion_id')->references('id')->on('sesions')->onDelete('cascade');
         });
     }
 
@@ -24,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clase_sesion');
+        Schema::dropIfExists('posts');
     }
 };

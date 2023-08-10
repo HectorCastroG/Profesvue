@@ -16,6 +16,8 @@ return new class extends Migration
             $table->text('title', 40);
             $table->text('body');
             $table->text('summary', 50)->nullable();
+            $table->string('pathpresentation')->nullable();
+            $table->string('pathguide')->nullable();
             $table->string('pkey1')->nullable();
             $table->string('pkey2')->nullable();
             $table->string('pkey3')->nullable();

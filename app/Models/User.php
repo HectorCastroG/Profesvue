@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Profesor;
+use App\Models\Post;
+use App\Models\Comment;
 
 class User extends Authenticatable
 {
@@ -67,9 +69,16 @@ class User extends Authenticatable
         return $this->hasOne(Profesor::class);
     }
 
-    public function sesion()
-{
-    return $this->belongsToMany(Sesion::class);
-}
+    public function sesion(){
+        return $this->belongsToMany(Sesion::class);
+    }
+
+    public function post(){
+        return $this->hasMany(Post::class);
+    }
+    public function comment(){
+        return $this->hasMany(Comment::class);
+
+    }
 
 }

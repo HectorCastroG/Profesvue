@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "element-plus": "^2.3.4",
+        "pdfjs-dist": "^3.8.162",
         "vue3-calendar-composable": "^0.1.5"
     }
 }

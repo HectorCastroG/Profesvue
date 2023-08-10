@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use App\Models\Clase;
 use App\Models\User;
@@ -65,9 +65,9 @@ class ClaseController extends Controller
         ]);
     }
 
-    public function nuevo(){
+    public function nuevo(Request $request){
 
-        $request = Request::validate([
+        $validacion = $request->validate([
             'titulo'=> 'required',
             'cuerpo' => 'required',
             'summary'=>'required',
@@ -77,7 +77,33 @@ class ClaseController extends Controller
             'asignatura'=>'required',
             'eje'=>'required',
             'contenido'=>'required',
+            'presentacion' => 'required|file|mimes:pptx,ppt,pdf', 
+            'guia' => 'required|file|mimes:docx,doc,pdf', 
+
+
         ]);
+
+        $pathpresentation = '';
+        if ($request->hasFile('presentacion')) {
+            $presentacionFile = $request->file('presentacion');
+            $rutaDestino = '/users/' . auth()->user()->id . '/presentacion';
+            $nombreArchivo = uniqid() . '.' . $presentacionFile->getClientOriginalExtension();
+            $presentacionFile->storeAs($rutaDestino, $nombreArchivo);
+            $pathpresentation = '/users/' . auth()->user()->id . '/presentacion/' . $nombreArchivo;
+
+        }
+
+        $pathguide = '';
+
+        if ($request->hasFile('guia')) {
+            $guideFile = $request->file('guia');
+            $rutaDestino = '/users/' . auth()->user()->id . '/guide';
+            $nombreArchivo = uniqid() . '.' . $guideFile->getClientOriginalExtension();
+            $guideFile->storeAs($rutaDestino, $nombreArchivo);
+            $pathguide= '/users/' . auth()->user()->id . '/guide/' . $nombreArchivo;
+        }
+
+
 
         $signature = Signature::where('nombre', request('asignatura'))->first();
         $contenido = Contenido::where('signature_id', '=', "$signature->id")
@@ -85,6 +111,7 @@ class ClaseController extends Controller
                         ->where('content', '=', request('contenido'))
                         ->first();
 
+                        
         Clase::create([
             'title'=>request('titulo'),
             'body' => request('cuerpo'),
@@ -93,9 +120,11 @@ class ClaseController extends Controller
             'pkey1'=>request('pkey1'),
             'pkey2'=>request('pkey2'),
             'pkey3'=>request('pkey3'),
+            'pathpresentation'=>$pathpresentation,
+            'pathguide'=>$pathguide,
             'contenido_id'=>$contenido->id
         ]);
-
+       
         return redirect('/inicio');
     }
 
@@ -135,49 +164,54 @@ class ClaseController extends Controller
         ]);
     }
 
-    public function update(Clase $clase){
-    $request = Request::validate([
-        'title' => 'required|max:255',
-        'body' => 'required',
-        'pkey1'=>'max:100',
-        'pkey2'=>'max:100',
-        'pkey3'=>'max:100',
-        'asignatura' => 'required',
-        'eje'=>'required',
-        'contenido'=>'required',
-        'summary' => 'required'
-    ]);
-
-    $signature = Signature::where('nombre', request('asignatura'))->first();
-    $contenido = Contenido::where('signature_id', '=', "$signature->id")
-                    ->where('eje', '=', request('eje'))
-                    ->where('content', '=', request('contenido'))
-                    ->first();
- 
-    $clase->update([
-        'title' => $request['title'],
-        'body' => $request['body'],
-        'pkey1'=>$request['pkey1'],
-        'pkey2'=>$request['pkey2'],
-        'pkey3'=>$request['pkey3'],
-        'summary' => $request['summary'],
-        'contenido_id'=>$contenido->id
-
-    ]);
-
-    return redirect('/');
+    public function update(Clase $clase, Request $request){
+        $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+            'pkey1'=>'max:100',
+            'pkey2'=>'max:100',
+            'pkey3'=>'max:100',
+            'asignatura' => 'required',
+            'eje'=>'required',
+            'contenido'=>'required',
+            'summary' => 'required'
+        ]);
+    
+        $signature = Signature::where('nombre', request('asignatura'))->first();
+        $contenido = Contenido::where('signature_id', '=', "$signature->id")
+                        ->where('eje', '=', request('eje'))
+                        ->where('content', '=', request('contenido'))
+                        ->first();
+    
+        $clase->update([
+            'title' => $request['title'],
+            'body' => $request['body'],
+            'pkey1'=>$request['pkey1'],
+            'pkey2'=>$request['pkey2'],
+            'pkey3'=>$request['pkey3'],
+            'summary' => $request['summary'],
+            'contenido_id'=>$contenido->id
+        
+        ]);
+    
+        return redirect('/');
     }
 
 
     public function destroy(Clase $clase){
-        
+
+         
         $clase->delete();
         return redirect('/inicio');
     }
 
-    public function pdf($filename){
-        $filePath = '/Users/hectorcastrogiacomozzi/profes/profesvue/resources/pdf/' . $filename;
+    public function guide(Clase $clase){
+        $filepath = '/Users/hectorcastrogiacomozzi/profes/profesvue/storage/app' . $clase->pathguide;
+        return response()->file($filepath);
+    }
 
-        return response()->file($filePath);
+    public function presentation(Clase $clase){
+        $filepath = '/Users/hectorcastrogiacomozzi/profes/profesvue/storage/app' . $clase->pathpresentation;
+    return response()->file($filepath);    
     }
 }
