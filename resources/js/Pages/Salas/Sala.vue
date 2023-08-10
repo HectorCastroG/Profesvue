@@ -4,6 +4,7 @@
     import Body from '../../Components/Body.vue';
     import Title from '@/Components/Title.vue';
     import Calendario from '../Calendar/Calendario.vue';
+    import Seguir from './Seguir.vue';
     defineProps({
         user: Array,
         asignaturas: Array,
@@ -19,7 +20,9 @@
             <Title>
                 Sala del profesor: {{ user.name }} {{ user.lastname }}
 
+                <Seguir :user="user"></Seguir>
             </Title>
+            
             
 
         </template>
