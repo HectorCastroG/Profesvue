@@ -57,6 +57,7 @@ Route::middleware([
         Route::get('editarpost/{post}', 'editarpost')->name('post.editar');
         Route::put('/post/editar/{post}', 'update');
         Route::delete('/deletecomment/{comment}', 'destroycomment')->name('delete.comment');
+        Route::post('seguir/{user}', 'seguirusuario');
 
      });
 

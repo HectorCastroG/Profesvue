@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Clase;
 use App\Models\Comment;
 use App\Models\Sesion;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Models\Post;
 
@@ -120,6 +121,17 @@ class SalasController extends Controller
     public function destroycomment(Comment $comment){
         $comment->delete();
         return redirect('/inicio');
+    }
+
+    public function seguirusuario(User $user){
+        $actualuser = auth()->user();
+        if ($actualuser->id === $user->id) {
+            return Redirect::back()->withErrors([
+                'miusuario' => 'No puedes seguirte'
+            ])->withInput(); 
+        }
+        $actualuser->following()->attach($user->id);
+        return Redirect::route('/inicio');
     }
 
 }
